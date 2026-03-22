@@ -57,6 +57,7 @@ export default function Home() {
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Cognitive Engine failure.');
       setMessages(prev => [...prev, { role: 'model', text: data.text }]);
       setArea(prev => prev + 1);
     } catch (err) {
@@ -97,6 +98,7 @@ export default function Home() {
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Cognitive Engine failure.');
       setMessages(prev => [...prev, { role: 'model', text: data.text }]);
     } catch (err) {
       console.error(err);
@@ -125,11 +127,13 @@ export default function Home() {
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Cognitive Engine failure.');
       setMessages(prev => [...prev, { role: 'model', text: data.text }]);
       setStep('transparent');
       setArea(50); // Massive area, flat pressure
     } catch (err) {
       console.error(err);
+      setMessages(prev => [...prev, { role: 'model', text: "Failed to force transparency. Maintain calm and consider manually." }]);
     } finally {
       setIsLoading(false);
     }
