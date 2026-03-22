@@ -32,19 +32,36 @@ app.post('/api/expand', async (req, res) => {
             promptModifier = "\n\nThe user has requested the final transparency state. Please provide the comprehensive, step-by-step breakdown showing how the problem essentially solves itself given the mapped constraints.";
         }
 
-        const model = genAI.getGenerativeModel({
-            model: "gemini-2.5-flash",
-            systemInstruction: SYSTEM_INSTRUCTION
-        });
-
-        const chat = model.startChat({
-            history: messages.slice(0, -1) // All but the last message
-        });
+        const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+        let responseText = "";
+        let lastError = null;
 
         const lastMessage = messages[messages.length - 1].parts[0].text;
-        const result = await chat.sendMessage(lastMessage + promptModifier);
 
-        const responseText = result.response.text();
+        for (const modelName of MODELS) {
+            try {
+                const model = genAI.getGenerativeModel({
+                    model: modelName,
+                    systemInstruction: SYSTEM_INSTRUCTION
+                });
+
+                const chat = model.startChat({
+                    history: messages.slice(0, -1) // All but the last message
+                });
+
+                const result = await chat.sendMessage(lastMessage + promptModifier);
+                responseText = result.response.text();
+                lastError = null;
+                break; // Success, exit loop
+            } catch (err) {
+                console.warn(`[Fallback] Model ${modelName} failed. Reason: ${err.message || 'Unknown error'}`);
+                lastError = err;
+            }
+        }
+
+        if (lastError) {
+            throw lastError; // if all fallback models failed
+        }
 
         res.json({
             text: responseText,
