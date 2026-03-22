@@ -146,7 +146,7 @@ export default function Home() {
   const opacity = area > 10 ? 0.3 : 0.8;
 
   return (
-    <main className="h-[100dvh] bg-black text-white flex flex-col font-sans overflow-hidden relative">
+    <main className="fixed inset-0 bg-black text-white flex flex-col font-sans overflow-hidden">
       
       {/* Background visual gauge ONLY visible on Home */}
       <div className={`fixed inset-0 pointer-events-none flex items-center justify-center -z-10 transition-opacity duration-1000 ${activeView === 'home' ? 'opacity-30' : 'opacity-5'}`}>
@@ -280,7 +280,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   className="w-full h-full flex flex-col"
                 >
-                  <div className="flex-1 w-full overflow-y-auto pb-32 space-y-8 scroll-smooth pr-2">
+                  <div className="flex-1 w-full overflow-y-auto pb-8 space-y-8 scroll-smooth pr-2">
                     <div className="pb-8 border-b border-white/10 mb-8 opacity-70 mt-4">
                       <h3 className="text-sm font-mono text-white/40 mb-2 uppercase tracking-widest">Core Concept (F)</h3>
                       <p className="text-2xl font-light">{problem}</p>
@@ -311,6 +311,8 @@ export default function Home() {
                       </div>
                     )}
                     
+                    {/* Spacer so the last message always clears the bottom fixed input bar */}
+                    <div className="h-40 md:h-48 shrink-0" />
                     <div ref={messagesEndRef} />
                   </div>
                 </motion.div>
@@ -324,7 +326,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 100 }}
-                className="absolute bottom-0 left-0 right-0 p-6 md:p-10 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none z-20"
+                className="fixed bottom-0 left-0 right-0 p-6 md:p-10 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none z-50"
               >
                 <div className="max-w-3xl mx-auto flex flex-col gap-4 pointer-events-auto">
                   <div className="flex justify-between items-end mb-2">
@@ -358,7 +360,7 @@ export default function Home() {
                       value={inputVal}
                       onChange={(e) => setInputVal(e.target.value)}
                       placeholder="Provide context..."
-                      className="w-full bg-transparent text-white px-5 py-4 text-base outline-none placeholder:text-white/20"
+                      className="w-full bg-transparent text-white px-5 py-4 text-[16px] outline-none placeholder:text-white/20"
                     />
                     <button 
                       type="submit"
@@ -377,7 +379,7 @@ export default function Home() {
             {step === 'transparent' && activeView === 'home' && (
               <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="absolute bottom-10 left-0 right-0 flex justify-center pointer-events-auto z-20"
+                className="fixed bottom-10 left-0 right-0 flex justify-center pointer-events-auto z-50"
               >
                 <button 
                   onClick={() => {
