@@ -22,7 +22,7 @@ export async function POST(request: Request) {
           promptModifier = "\n\nThe user has requested the final transparency state. Please provide the comprehensive, step-by-step breakdown showing how the problem essentially solves itself given the mapped constraints.";
         }
 
-        const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+        const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-flash-latest"];
         let responseText = "";
         let lastError: any;
 
