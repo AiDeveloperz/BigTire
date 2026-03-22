@@ -225,11 +225,11 @@ export default function Home() {
       </AnimatePresence>
 
       {/* --- VIEWS --- */}
-      <div className="flex-1 relative">
+      <div className="flex-1 relative min-h-0">
         
         {/* HOMEPAGE VIEW (Hidden via CSS when inactive to preserve state) */}
         <div className={`absolute inset-0 flex flex-col transition-opacity duration-500 ${activeView === 'home' ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none -z-10'}`}>
-          <div className="flex-1 flex flex-col items-center justify-center p-6 w-full max-w-3xl mx-auto relative">
+          <div className={`flex-1 flex flex-col items-center ${step === 'initial' ? 'justify-center' : 'justify-start'} p-6 w-full max-w-3xl mx-auto relative min-h-0`}>
             
             <AnimatePresence mode="wait">
               {step === 'initial' && activeView === 'home' && (
@@ -278,7 +278,7 @@ export default function Home() {
                   key="expanding"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="w-full h-full flex flex-col"
+                  className="w-full h-full flex flex-col min-h-0"
                 >
                   <div className="flex-1 w-full overflow-y-auto pb-8 space-y-8 scroll-smooth pr-2">
                     <div className="pb-8 border-b border-white/10 mb-8 opacity-70 mt-4">
