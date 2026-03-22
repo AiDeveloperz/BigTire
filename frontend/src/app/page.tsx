@@ -146,7 +146,7 @@ export default function Home() {
   const opacity = area > 10 ? 0.3 : 0.8;
 
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col font-sans overflow-hidden">
+    <main className="h-[100dvh] bg-black text-white flex flex-col font-sans overflow-hidden relative">
       
       {/* Background visual gauge ONLY visible on Home */}
       <div className={`fixed inset-0 pointer-events-none flex items-center justify-center -z-10 transition-opacity duration-1000 ${activeView === 'home' ? 'opacity-30' : 'opacity-5'}`}>
@@ -324,7 +324,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 100 }}
-                className="absolute bottom-0 left-0 right-0 p-6 md:p-10 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none"
+                className="absolute bottom-0 left-0 right-0 p-6 md:p-10 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none z-20"
               >
                 <div className="max-w-3xl mx-auto flex flex-col gap-4 pointer-events-auto">
                   <div className="flex justify-between items-end mb-2">
@@ -377,7 +377,7 @@ export default function Home() {
             {step === 'transparent' && activeView === 'home' && (
               <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="absolute bottom-10 left-0 right-0 flex justify-center pointer-events-auto"
+                className="absolute bottom-10 left-0 right-0 flex justify-center pointer-events-auto z-20"
               >
                 <button 
                   onClick={() => {
